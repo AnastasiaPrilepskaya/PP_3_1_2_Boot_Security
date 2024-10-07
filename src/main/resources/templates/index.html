@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>Welcome, ADMIN!</h1>
+
+<div th:each="msg : ${users}">
+    <a th:href="@{/admin/show(id=${msg.getId()})}"
+       th:text="${msg}">person</a>
+    <br>
+
+</div>
+
+<br/>
+<hr/>
+
+<a href="/admin/new">Create new person</a>
+
+</body>
+</html>
