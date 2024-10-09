@@ -75,7 +75,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional
     public User getUserByUsername(String username) {
-        String query1 = "SELECT u FROM User u where username = :username";
+        String query1 = "SELECT u FROM User u LEFT JOIN FETCH u.roles where u.username = :username";
         List<User> query = entityManager.createQuery(query1, User.class).setParameter("username", username).getResultList();
         if (query.isEmpty()) {
             System.out.println("----------------------------------------------");

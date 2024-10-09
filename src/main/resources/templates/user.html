@@ -1,14 +1,94 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example</title>
-</head>
-<body>
-<h1>Welcome spring boot security page, <span th:text="${#strings.concat(users.username, '!')}"></span></h1>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
+<!--<head>-->
+<!--    <title>Spring Security Example</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Welcome spring boot security page, <span th:text="${#strings.concat(users.username, '!')}"></span></h1>-->
 
-<form th:action="@{/logout}" th:method="POST">
-    <input type="submit" value="Logout" />
-</form>
+<!--<form th:action="@{/logout}" th:method="POST">-->
+<!--    <input type="submit" value="Logout" />-->
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg bg-dark">
+    <a class="navbar-brand text-light text font-weight-bold" th:text="${user.getName()}"></a>
+    <div class="text-light">with roles:</div>
+    <div class="text-light m-1" th:text="${user.getAuthorities()}"></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <form action="/logout" method="post" class="ml-auto mt-2 mt-md-0">
+        <button type="submit " class="mr-sm-2 my-2 my-sm-0">Logout</button>
+    </form>
+
+</nav>
+<div style="height:100vh">
+    <section class="row" style="height: 100vh">
+
+        <div class="col-md-2" style="padding-right: 0px">
+            <ul class="nav nav-pills flex-column" style="padding-top: 10px ; width: 100%">
+
+
+                <li class="nav-item">
+                    <a href="/admin/" class="nav-link active">User</a>
+                </li>
+<!--                <li class="nav-item" style="height: 40px" sec:authorize="hasAuthority('ADMIN')">-->
+<!--                    <a href="/admin/" class="nav-link">Admin</a>-->
+<!--                </li>-->
+
+            </ul>
+        </div>
+
+        <div class="container mx-auto col bg-light" style="padding-left: 2em; padding-right: 5em">
+            <h1 class="text " style="margin-top: 10px">User information-page</h1>
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    About User
+                </div>
+                <div class="container w-100" style="margin-top:20px">
+                    <table class="table align-middle auto__table table-striped">
+                        <thead class="thead">
+                        <th class="text-center">Id</th>
+                        <th class="text-center">UserName</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">LastName</th>
+                        <th class="text-center">Age</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${user.getId()}" class="text-center"></td>
+                            <td th:text="${user.getUsername()}" class="text-center"></td>
+                            <td th:text="${user.getName()}" class="text-center"></td>
+                            <td th:text="${user.getLastName()}" class="text-center"></td>
+                            <td th:text="${user.getAge()}" class="text-center"></td>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            </ul>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </section>
+</div>
 
 </body>
+
 </html>

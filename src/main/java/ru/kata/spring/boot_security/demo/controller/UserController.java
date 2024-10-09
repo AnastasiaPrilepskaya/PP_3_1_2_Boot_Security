@@ -24,9 +24,8 @@ public class UserController {
     @GetMapping ()
     public String index(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         String userName = userDetails.getUsername();
-        System.out.println(userName);
         User user = userService.getUserByUsername(userName);
-        model.addAttribute("users", user);
+        model.addAttribute("user", user);
         System.out.println(user);
         return "user";
     }
