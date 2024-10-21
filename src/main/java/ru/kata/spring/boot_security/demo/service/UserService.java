@@ -26,10 +26,7 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-    public Set<Role> getRolesByRole(Set<Role> roles);
+    Set<Role> getRolesByRole(Set<Role> roles);
 
-    public List<Role> getAllRoles();
-
-//    public Role getRoleByName(String role);
-
+    List<Role> getAllRoles();
 }

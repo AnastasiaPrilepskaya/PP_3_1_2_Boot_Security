@@ -36,12 +36,6 @@ public class UserDaoImpl implements UserDao {
         entityManager.persist(user);
     }
 
-//    @Transactional
-//    @Override
-//    public void removeUserById(long id) {
-//        User user = entityManager.find(User.class, id);
-//        entityManager.remove(user);
-//    }
 @Transactional
 @Override
 public void removeUserById(long id) {
