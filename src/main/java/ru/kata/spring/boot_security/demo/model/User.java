@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table (name = "users")
@@ -15,7 +15,7 @@ public class User implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column (name = "name", nullable = false)
     private String name;
@@ -24,7 +24,7 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "age")
-    private Byte age;
+    private byte age;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
     public User() {}
@@ -42,21 +42,23 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.age = age;
     }
+
     public User(String username, String password, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
 
-    public User(String name, String lastName, Byte age, String username, String password) {
+    public User(String name, String lastName, Byte age, String username, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.username = username;
         this.password = password;
+        this.roles = roles;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -80,7 +82,7 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public Byte getAge() {
+    public byte getAge() {
         return age;
     }
 
@@ -90,7 +92,6 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new Role("ROLE_USER"));
         return getRoles();
     }
 
@@ -125,6 +126,8 @@ public class User implements UserDetails {
     }
 
     public void setRoles(Set<Role> roles) {
+//        Set<Role> roles1 = new HashSet<>();
+        //roles1.add(roles);
         this.roles = roles;
     }
 
@@ -143,4 +146,5 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

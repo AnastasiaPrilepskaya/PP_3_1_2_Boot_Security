@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -32,17 +31,30 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     @Override
-    public void saveUser(String name, String lastName, byte age, String username, String password) {
-        User user = new User(name, lastName, age, username, password);
+    public void saveUser(String name, String lastName, byte age, String username, String password, Set<Role> roles) {
+        User user = new User(name, lastName, age, username, password, roles);
         entityManager.persist(user);
     }
 
-    @Transactional
-    @Override
-    public void removeUserById(long id) {
-        User user = entityManager.find(User.class, id);
+//    @Transactional
+//    @Override
+//    public void removeUserById(long id) {
+//        User user = entityManager.find(User.class, id);
+//        entityManager.remove(user);
+//    }
+@Transactional
+@Override
+public void removeUserById(long id) {
+    User user = entityManager.find(User.class, id);
+    if (user != null) {
+        for (Role role : user.getRoles()) {
+            role.getUsers().remove(user);
+        }
+        user.getRoles().clear();
+
         entityManager.remove(user);
     }
+}
 
     @Override
     public List<User> getAllUsers() {
@@ -58,11 +70,14 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     @Override
-    public void updateUserById(long id, String name, String lastName, byte age) {
+    public void updateUserById(long id, String name, String lastName, byte age, String username, String password, Set<Role> roles) {
         User user = entityManager.find(User.class, id);
         user.setName(name);
         user.setLastName(lastName);
         user.setAge(age);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRoles(roles);
         entityManager.persist(user);
     }
 
@@ -70,7 +85,6 @@ public class UserDaoImpl implements UserDao {
     public User getUserById(long id) {
         return entityManager.find(User.class, id);
     }
-
 
     @Override
     @Transactional

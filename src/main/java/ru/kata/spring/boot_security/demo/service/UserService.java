@@ -1,8 +1,10 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -10,7 +12,7 @@ public interface UserService {
 
     void dropUsersTable();
 
-    void saveUser(String name, String lastName, byte age, String username, String password);
+    void saveUser(String name, String lastName, byte age, String username, String password, Set<Role> role);
 
     void removeUserById(long id);
 
@@ -23,4 +25,11 @@ public interface UserService {
     User getUserById(long id);
 
     User getUserByUsername(String username);
+
+    public Set<Role> getRolesByRole(Set<Role> roles);
+
+    public List<Role> getAllRoles();
+
+//    public Role getRoleByName(String role);
+
 }
