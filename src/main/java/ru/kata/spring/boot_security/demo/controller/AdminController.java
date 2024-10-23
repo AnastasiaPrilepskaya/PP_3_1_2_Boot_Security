@@ -36,7 +36,7 @@ public class AdminController {
     }
 
     @GetMapping("/edit")
-    public String edit(@RequestParam("id") Long id, Model model) {
+    public String edit(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "index";
     }
@@ -47,26 +47,25 @@ public class AdminController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("newUser") User user,
-                         BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+    public String create(@ModelAttribute("newUser") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "index";
-
+        }
         userService.saveUser(user.getName(), user.getLastName(), user.getAge(), user.getUsername(), user.getPassword(), user.getRoles());
         return "redirect:/admin";
     }
 
     @PostMapping("/edit")
     public String update(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "index";
-
+        }
         userService.updateUser(user);
         return "redirect:/admin";
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam("id") int id) {
+    public String delete(@RequestParam("id") long id) {
         userService.removeUserById(id);
         return "redirect:/admin";
     }

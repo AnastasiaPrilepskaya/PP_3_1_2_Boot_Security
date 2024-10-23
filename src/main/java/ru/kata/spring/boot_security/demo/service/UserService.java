@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
@@ -29,4 +30,10 @@ public interface UserService {
     Set<Role> getRolesByRole(Set<Role> roles);
 
     List<Role> getAllRoles();
+
+    Set<Role> findByName(String name);
+
+    boolean existsByName(String name);
+
+    void save(Role roleAdmin);
 }

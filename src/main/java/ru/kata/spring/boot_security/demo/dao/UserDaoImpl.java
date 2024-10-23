@@ -29,26 +29,24 @@ public class UserDaoImpl implements UserDao {
         entityManager.createNativeQuery("DROP TABLE IF EXISTS users").executeUpdate();
     }
 
-    @Transactional
     @Override
     public void saveUser(String name, String lastName, byte age, String username, String password, Set<Role> roles) {
         User user = new User(name, lastName, age, username, password, roles);
         entityManager.persist(user);
     }
 
-@Transactional
-@Override
-public void removeUserById(long id) {
-    User user = entityManager.find(User.class, id);
-    if (user != null) {
-        for (Role role : user.getRoles()) {
-            role.getUsers().remove(user);
-        }
-        user.getRoles().clear();
+    @Override
+    public void removeUserById(long id) {
+        User user = entityManager.find(User.class, id);
+        if (user != null) {
+            for (Role role : user.getRoles()) {
+                role.getUsers().remove(user);
+            }
+            user.getRoles().clear();
 
-        entityManager.remove(user);
+            entityManager.remove(user);
+        }
     }
-}
 
     @Override
     public List<User> getAllUsers() {
@@ -56,13 +54,11 @@ public void removeUserById(long id) {
         return query.getResultList();
     }
 
-    @Transactional
     @Override
     public void cleanUsersTable() {
         entityManager.createNativeQuery("TRUNCATE TABLE users").executeUpdate();
     }
 
-    @Transactional
     @Override
     public void updateUserById(long id, String name, String lastName, byte age, String username, String password, Set<Role> roles) {
         User user = entityManager.find(User.class, id);
@@ -81,7 +77,6 @@ public void removeUserById(long id) {
     }
 
     @Override
-    @Transactional
     public User getUserByUsername(String username) {
         String query1 = "SELECT u FROM User u LEFT JOIN FETCH u.roles where u.username = :username";
         List<User> query = entityManager.createQuery(query1, User.class).setParameter("username", username).getResultList();

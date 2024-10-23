@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-@Table (name = "users")
+@Table(name = "users")
 @Entity
 public class User implements UserDetails {
 
@@ -16,10 +16,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column (name = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column (name = "last_name", nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "age")
@@ -34,7 +34,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String lastName, Byte age) {
         this.name = name;
@@ -125,8 +126,6 @@ public class User implements UserDetails {
     }
 
     public void setRoles(Set<Role> roles) {
-//        Set<Role> roles1 = new HashSet<>();
-        //roles1.add(roles);
         this.roles = roles;
     }
 

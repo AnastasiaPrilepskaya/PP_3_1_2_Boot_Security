@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -36,12 +37,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userDao.dropUsersTable();
     }
 
+    @Transactional
     @Override
     public void saveUser(String name, String lastName, byte age, String username, String password, Set<Role> roles) {
         var rolesDb = getRolesByRole(roles);
         userDao.saveUser(name, lastName, age, username, password, rolesDb);
     }
 
+    @Transactional
     @Override
     public void removeUserById(long id) {
         userDao.removeUserById(id);
@@ -52,30 +55,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.getAllUsers();
     }
 
+    @Transactional
     @Override
     public void cleanUsersTable() {
         userDao.cleanUsersTable();
     }
 
+    @Transactional
     @Override
     public void updateUser(User user) {
         var rolesDb = getRolesByRole(user.getRoles());
         userDao.updateUserById(user.getId(), user.getName(), user.getLastName(), user.getAge(), user.getUsername(), user.getPassword(), rolesDb);
     }
 
+    @Transactional
     @Override
     public User getUserById(long id) {
-
         var user = userDao.getUserById(id);
-
-        return  user;
+        return user;
     }
 
+    @Transactional
     @Override
     public User getUserByUsername(String username) {
         return userDao.getUserByUsername(username);
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -86,7 +92,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.getUserByUsername(username);
     }
 
-    public Set<Role> getRolesByRole(Set<Role> roles){
+    public Set<Role> getRolesByRole(Set<Role> roles) {
         return roleDao.getRolesByRole(roles);
     }
 
@@ -94,8 +100,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return roleDao.getAllRoles();
     }
 
-//    public Set<Role> getRoleByName(String role){
-//        return roleDao.getRoleByName(role);
-//    }
+    public Set<Role> findByName(String name) {
+        return roleDao.findByName(name);
+    }
+
+    public boolean existsByName(String roleName) {
+        return roleDao.existsByName(roleName);
+    }
+
+    @Transactional
+    public void save(Role role) {
+        roleDao.save(role);
+    }
 
 }

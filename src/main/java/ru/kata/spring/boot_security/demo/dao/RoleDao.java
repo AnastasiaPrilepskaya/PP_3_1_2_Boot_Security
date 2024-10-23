@@ -11,4 +11,10 @@ public interface RoleDao {
 
     Set<Role> getRolesByRole(Set<Role> roles);
 
+    Set<Role> findByName(String name);
+
+    boolean existsByName(String name);
+
+    void save(Role role);
+
 }

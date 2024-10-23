@@ -29,7 +29,6 @@ public class Role implements GrantedAuthority {
     }
 
 
-
     public String getRole() {
         return role;
     }
@@ -51,7 +50,6 @@ public class Role implements GrantedAuthority {
     }
 
     public void setUsers(Set<User> users) {
-//        this.users = users;
         if (users == null) {
             this.users = new HashSet<>();
         } else {
@@ -65,8 +63,8 @@ public class Role implements GrantedAuthority {
             return role.substring(5);
         }
         return role;
-
     }
+
     @Override
     public String getAuthority() {
         return getRole();
